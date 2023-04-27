@@ -1,0 +1,29 @@
+### UPLOAD V1
+POST http://192.168.0.146:8080/api/v1/attach/upload/v1
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="wallpaperflare.com_wallpaper.jpg"
+
+< C:\wallpaperflare.com_wallpaper.jpg
+
+### UPLOAD V2
+POST http://localhost:8080/api/v1/attach/upload/v2
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="wallpaperflare.com_wallpaper.mp"
+
+< C:\wallpaperflare.com_wallpaper.jpg
+
+### video
+POST http://192.168.0.146:8080/api/v1/attach/open_general/e0cbca99-8ad6-4ccb-8336-b2ed5731cc77.mp4
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="111.mp4"
+
+< C:\Users\kholm\Videos\111.mp4
+
+#< C:\Users\BigMan\Desktop\11\test_imge_1.jpg
+

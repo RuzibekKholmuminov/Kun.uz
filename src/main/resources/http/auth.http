@@ -1,0 +1,20 @@
+### Login
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "kholmuminovruzibek@gmail.com",
+  "password": "2211"
+}
+
+### Registration
+POST http://localhost:8080/api/v1/auth/registration
+Content-Type: application/json
+
+{
+  "name": "Toshmat",
+  "surname": "Toshmatov",
+  "email": "kholmuminovruzibek@gmail.com",
+  "phone": "991234567",
+  "password": "2211"
+}
