@@ -1,0 +1,8 @@
+### Article create
+POST http://localhost:8080/api/v1/article/create
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2MTIyMjQsImlkIjo5LCJyb2xlIjoiTU9ERVJBVE9SIiwiZXhwIjoxNjgyNjk4NjI0LCJpc3MiOiJLdW51eiB0ZXN0IHBvcnRhbGkifQ.MrR44oqPSILnc_oah4FyUwbMLABtD0k6C4RepAuHTHqYPpKquf9Xqkx4ZkXxOoOLinmFeXsy1xWmnle7Zh5l0Q
+Content-Type: application/json
+
+{
+  "description": "asdadadsa"
+}

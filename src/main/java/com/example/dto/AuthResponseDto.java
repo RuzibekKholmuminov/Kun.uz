@@ -1,6 +1,7 @@
 package com.example.dto;
 
 import com.example.enums.ProfileRole;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

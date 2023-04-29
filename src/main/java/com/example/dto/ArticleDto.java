@@ -11,6 +11,7 @@ public class ArticleDto {
     private String description;
     private String content;
     private Integer shared_count;
+    private Integer attach_id;
     private Integer image_id;
     private Integer region_id;
     private Integer category_id;

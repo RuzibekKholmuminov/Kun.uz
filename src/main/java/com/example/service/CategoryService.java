@@ -17,6 +17,7 @@ import java.util.Optional;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+
     public Integer create(CategoryDto dto, Integer adminId) {
 
         CategoryEntity entity = new CategoryEntity();
@@ -31,6 +32,7 @@ public class CategoryService {
         dto.setId(entity.getId());
         return entity.getId();
     }
+
     public Boolean update(Integer id, CategoryDto categoryDto) {
         CategoryEntity entity = get(id);
         if (entity == null) {
@@ -43,6 +45,7 @@ public class CategoryService {
         categoryRepository.save(entity);
         return true;
     }
+
     public CategoryEntity get(Integer id) {
         Optional<CategoryEntity> optional = categoryRepository.findById(id);
         if (optional.isEmpty()) {
@@ -72,20 +75,19 @@ public class CategoryService {
         List<CategoryEntity> entityList = pageObj.getContent();
         List<CategoryDto> dtoList = new LinkedList<>();
 
-        if (!pageObj.equals(null)) {
-            for (CategoryEntity entity : entityList) {
-                CategoryDto dto = new CategoryDto();
-                dto.setId(entity.getId());
-                dto.setNameUz(entity.getNameUz());
-                dto.setNameRU(entity.getNameRu());
-                dto.setNameEng(entity.getNameEng());
-                dto.setCreatedDate(entity.getCreatedDate());
-                dto.setVisible(entity.getVisible());
-                dtoList.add(dto);
-            }
-            Page<CategoryDto> response = new PageImpl<CategoryDto>(dtoList, paging, totalCount);
-            return response;
+
+        for (CategoryEntity entity : entityList) {
+            CategoryDto dto = new CategoryDto();
+            dto.setId(entity.getId());
+            dto.setNameUz(entity.getNameUz());
+            dto.setNameRU(entity.getNameRu());
+            dto.setNameEng(entity.getNameEng());
+            dto.setCreatedDate(entity.getCreatedDate());
+            dto.setVisible(entity.getVisible());
+            dtoList.add(dto);
         }
-        throw new ItemNotFoundException("ArticleType is empty");
+        Page<CategoryDto> response = new PageImpl<CategoryDto>(dtoList, paging, totalCount);
+        return response;
+
     }
 }

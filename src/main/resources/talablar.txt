@@ -55,7 +55,8 @@ ADMIN, MODERATOR, PUBLISHER, USER
     6. Update Photo (ANY) (Murojat qilgan odamni rasmini upda qilish)   (remove old image)
            photo_id
     7. Filter (name,surname,phone,role,created_date_from,created_date_to)
-3. ArticleType
+
+    3. ArticleType
     1. Create  (ADMIN)
         (key,name_uz, name_ru, name_en)
     2. Update by id (ADMIN)

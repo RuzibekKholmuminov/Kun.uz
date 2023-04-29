@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.ArticleDto;
+import com.example.dto.ArticleRequestDto;
 import com.example.dto.JwtDto;
 import com.example.enums.ProfileRole;
 import com.example.service.ArticleService;
@@ -18,23 +19,24 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping("/create")
-    public ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto articleDto,
+    public ResponseEntity<ArticleRequestDto> createArticle(@RequestBody ArticleRequestDto articleDto,
                                                     @RequestHeader("Authorization") String authorization){
-        JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR);
-        return ResponseEntity.ok(articleService.createArticle(articleDto,jwtDTO.getId()));
+        JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR, ProfileRole.ADMIN);
+        return ResponseEntity.ok(articleService.create(articleDto,jwtDTO.getId()));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> deleteArticle(@PathVariable("id")Integer id,
                                                     @RequestHeader("Authorization") String authorization){
         JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR);
-        return ResponseEntity.ok(articleService.deleteArticle(id,jwtDTO.getId()));
+        return ResponseEntity.ok(articleService.delete(id));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Boolean> updateArticle(@PathVariable("id")Integer id,
+    public ResponseEntity<ArticleRequestDto> updateArticle(@RequestBody ArticleRequestDto articleDto,
+                                                 @PathVariable("id")Integer id,
                                                  @RequestHeader("Authorization") String authorization){
         JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR);
-        return ResponseEntity.ok(articleService.updateArticle(id,jwtDTO.getId()));
+        return ResponseEntity.ok(articleService.update(articleDto, id));
     }
 }

@@ -72,7 +72,7 @@ public class RegionService {
         List<RegionEntity> entityList = pageObj.getContent();
         List<RegionDto> dtoList = new LinkedList<>();
 
-        if (!pageObj.equals(null)) {
+
             for (RegionEntity entity : entityList) {
                 RegionDto dto = new RegionDto();
                 dto.setId(entity.getId());
@@ -85,7 +85,5 @@ public class RegionService {
             }
             Page<RegionDto> response = new PageImpl<RegionDto>(dtoList, paging, totalCount);
             return response;
-        }
-        throw new ItemNotFoundException("ArticleType is empty");
     }
 }

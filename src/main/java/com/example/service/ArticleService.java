@@ -1,11 +1,10 @@
 package com.example.service;
 
-import com.example.dto.ArticleDto;
+import com.example.dto.ArticleRequestDto;
 import com.example.entity.ArticleEntity;
-import com.example.entity.CategoryEntity;
-import com.example.entity.RegionEntity;
 import com.example.enums.ArticleStatus;
 import com.example.repository.ArticleRepository;
+import com.example.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,41 +12,67 @@ import org.springframework.stereotype.Service;
 public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-    public ArticleDto createArticle(ArticleDto articleDto, Integer id) {
-        ArticleEntity articleEntity = new ArticleEntity();
-        articleEntity.setContent(articleDto.getContent());
-        articleEntity.setTitle(articleDto.getTitle());
-        articleEntity.setDescription(articleDto.getDescription());
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setId(articleDto.getCategory_id());
-        articleEntity.setCategory_id(categoryEntity);
-        RegionEntity regionEntity = new RegionEntity();
-        regionEntity.setId(articleDto.getRegion_id());
-        articleEntity.setRegion_id(regionEntity);
-        articleEntity.setShared_count(articleDto.getShared_count());
+    public ArticleRequestDto create(ArticleRequestDto dto, Integer moderId) {
+        // check
+        ArticleEntity entity = new ArticleEntity();
+        entity.setTitle(dto.getTitle());
+        entity.setDescription(dto.getDescription());
+        entity.setContent(dto.getContent());
 
-        articleRepository.save(articleEntity);
-        articleDto.setId(articleEntity.getId());
-        return articleDto;
+        // type
+        articleRepository.save(entity);
+        return dto;
     }
 
-    public boolean deleteArticle(Integer id, Integer jwt) {
-        articleRepository.deleteById(id);
+    public ArticleRequestDto update(ArticleRequestDto dto, Integer id) {
+        ArticleEntity entity = articleRepository.findById(id).orElse(null);
+        if (entity == null) {
+            throw new RuntimeException("this article is null");
+        }
+        if (dto.getCategoryId() != null) {
+            entity.setCategory(categoryRepository.findById(dto.getCategoryId()).orElse(null));
+        }
+        if (dto.getDescription() != null) {
+            entity.setDescription(dto.getDescription());
+        }
+        if (dto.getContent() != null) {
+            entity.setContent(dto.getContent());
+        }
+        if (dto.getTitle() != null) {
+            entity.setTitle(dto.getTitle());
+        }
+        articleRepository.save(entity);
+        return dto;
+    }
+
+    public boolean delete(Integer id) {
+        ArticleEntity entity = articleRepository.findById(id).orElse(null);
+        if (entity == null) {
+            throw new RuntimeException("this article is null");
+        }
+        entity.setVisible(false);
+        articleRepository.save(entity);
         return true;
     }
 
-    public Boolean updateArticle(Integer id, Integer id1) {
-        ArticleEntity articleEntity = articleRepository.getById(id);
-        if (articleEntity == null){
-            return false;
+    public String changeStatus(ArticleStatus status,Integer id) {
+        ArticleEntity entity =articleRepository.findById(id).orElse(null);
+        if (entity==null){
+            throw new RuntimeException("entity is null");
         }
+        entity.setStatus(status);
+        articleRepository.save(entity);
+        return "changed !!! ";
+    }
 
-        if (articleEntity.getArticleStatus() == ArticleStatus.PUBLISHED){
-            articleEntity.setArticleStatus(ArticleStatus.NOT_PUBLISHED);
-        }else if (articleEntity.getArticleStatus() == ArticleStatus.NOT_PUBLISHED){
-            articleEntity.setArticleStatus(ArticleStatus.PUBLISHED);
-        }
-        return true;
+    public ArticleEntity DTOToEntity(ArticleRequestDto dto) {
+        ArticleEntity entity = new ArticleEntity();
+        entity.setContent(dto.getContent());
+        entity.setCategory(categoryRepository.findById(dto.getCategoryId()).orElse(null));
+        entity.setDescription(dto.getDescription());
+        return entity;
     }
 }
