@@ -1,16 +1,16 @@
 package com.example.controller;
 
-import com.example.dto.ArticleDto;
-import com.example.dto.ArticleRequestDto;
-import com.example.dto.JwtDto;
+import com.example.dto.*;
+import com.example.enums.ArticleStatus;
 import com.example.enums.ProfileRole;
 import com.example.service.ArticleService;
-import com.example.service.AuthService;
 import com.example.util.JwtUtil;
-import org.apache.tomcat.util.http.parser.Authorization;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/article")
@@ -18,25 +18,55 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ArticleRequestDto> createArticle(@RequestBody ArticleRequestDto articleDto,
-                                                    @RequestHeader("Authorization") String authorization){
-        JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR, ProfileRole.ADMIN);
-        return ResponseEntity.ok(articleService.create(articleDto,jwtDTO.getId()));
+    @PostMapping("")
+    public ResponseEntity<ArticleRequestDto> create(@RequestBody @Valid ArticleRequestDto dto,
+                                                    @RequestHeader("Authorization") String authorization) {
+        JwtDto jwt = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR, ProfileRole.ADMIN);
+        return ResponseEntity.ok(articleService.create(dto, jwt.getId()));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteArticle(@PathVariable("id")Integer id,
-                                                    @RequestHeader("Authorization") String authorization){
-        JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR);
+    @PostMapping("/{id}")
+    public ResponseEntity<ArticleRequestDto> update(@RequestBody ArticleRequestDto dto,
+                                                    @RequestHeader("Authorization") String authorization,
+                                                    @PathVariable("id") String articleId) {
+        JwtDto jwt = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR);
+        return ResponseEntity.ok(articleService.update(dto, articleId));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") String id,
+                                    @RequestHeader("Authorization") String authorization) {
+        JwtDto jwt = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR, ProfileRole.ADMIN);
         return ResponseEntity.ok(articleService.delete(id));
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ArticleRequestDto> updateArticle(@RequestBody ArticleRequestDto articleDto,
-                                                 @PathVariable("id")Integer id,
-                                                 @RequestHeader("Authorization") String authorization){
-        JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR);
-        return ResponseEntity.ok(articleService.update(articleDto, id));
+    @PostMapping("/change-status/{id}/{status}")
+    public ResponseEntity<Boolean> changeStatus(@PathVariable("id") String id,
+                                          @PathVariable("status") String status,
+                                          @RequestHeader("Authorization") String authorization) {
+        JwtDto jwt = JwtUtil.getJwtDTO(authorization, ProfileRole.PUBLISHER, ProfileRole.ADMIN);
+        return ResponseEntity.ok(articleService.changeStatus(ArticleStatus.valueOf(status), id, jwt.getId()));
     }
+
+    @GetMapping("/getLast5Article/{id}")
+    private ResponseEntity<List<ArticleShortInfoDTO>> getLast5Article(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(articleService.getLast5ByTypeId(id));
+    }
+
+    @GetMapping("/getLast3Article/{id}")
+    private ResponseEntity<List<ArticleShortInfoDTO>> getLast3Article(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(articleService.getLast3ByTypeId(id));
+    }
+
+//    @PostMapping("/getLast8Article/{id}")
+//    private ResponseEntity<List<ArticleShortInfoDTO>> getLast8Article(@PathVariable("id") Integer type_id,
+//                                                                      @RequestBody ArticleListGet article_id){
+//        return ResponseEntity.ok(articleService.getLast8ByTypeId(type_id, article_id));
+//    }
+
+    @GetMapping("getById/{id}")
+    private ResponseEntity<ArticleFullInfoDTO> getByIdAndLang(@PathVariable("id") String  id){
+        return ResponseEntity.ok(articleService.getById(id));
+    }
+
 }

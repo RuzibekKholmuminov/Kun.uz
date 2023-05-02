@@ -1,9 +1,11 @@
 package com.example.service;
 
+import com.example.dto.AttachDto;
 import com.example.entity.AttachEntity;
 import com.example.exps.ItemNotFoundException;
 import com.example.repository.AttachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ import java.util.UUID;
 
 @Service
 public class AttachService {
+    @Value("${server.host}")
+    private String serverHost;
     @Autowired
     private AttachRepository attachRepository;
 
@@ -86,7 +90,7 @@ public class AttachService {
         return null;
     }
 
-    public String saveToSystem3(MultipartFile file) {
+    public AttachDto saveToSystem3(MultipartFile file) {
         try {
             String pathFolder = getYmDString(); // 2022/04/23
             File folder = new File("attaches/" + pathFolder);  // attaches/2023/04/26
@@ -108,11 +112,23 @@ public class AttachService {
             Path path = Paths.get("attaches/" + pathFolder + "/" + attachEntity.getId() + "." + extension);
             // attaches/2023/04/26/uuid().jpg
             Files.write(path, bytes);
-            return attachEntity.getId() + "." + extension;
+
+            AttachDto dto = new AttachDto();
+            dto.setId(attachEntity.getId());
+            dto.setOriginalName(file.getOriginalFilename());
+            dto.setUrl(serverHost + "/api/v1/attach/open/" + attachEntity.getId());
+
+            return dto;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+    public AttachDto getAttachLink(String attachId) {
+        AttachDto dto = new AttachDto();
+        dto.setId(attachId);
+        dto.setUrl(serverHost + "/api/v1/attach/open/" + attachId);
+        return dto;
     }
 
 
@@ -134,6 +150,18 @@ public class AttachService {
         }
     }
 
+    public byte[] loadImage2(String id) {
+        AttachEntity attachEntity = get(id);
+        byte[] data;
+        try {
+            Path file = Paths.get("attaches/" + attachEntity.getPath() + "/" + id + "." + attachEntity.getExtension());
+            data = Files.readAllBytes(file);
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
     public byte[] open_general(String attachName) {
         byte[] data;
         try {

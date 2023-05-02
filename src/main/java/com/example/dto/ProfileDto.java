@@ -18,9 +18,11 @@ public class ProfileDto {
     private String email;
     @NotNull(message = "phone required")
     private String phone;
-    @NotNull(message = "role required")private String password;
-    private ProfileRole role;
+    @NotNull(message = "role required")
+    private String password;
     @NotNull(message = "status required")
     private GeneralStatus status;
+    @NotNull(message = "role required")
+    private ProfileRole role;
     private Boolean visible;
 }

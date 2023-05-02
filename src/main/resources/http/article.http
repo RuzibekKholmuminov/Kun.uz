@@ -1,8 +1,46 @@
-### Article create
-POST http://localhost:8080/api/v1/article/create
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI2MTIyMjQsImlkIjo5LCJyb2xlIjoiTU9ERVJBVE9SIiwiZXhwIjoxNjgyNjk4NjI0LCJpc3MiOiJLdW51eiB0ZXN0IHBvcnRhbGkifQ.MrR44oqPSILnc_oah4FyUwbMLABtD0k6C4RepAuHTHqYPpKquf9Xqkx4ZkXxOoOLinmFeXsy1xWmnle7Zh5l0Q
+### ARTICLE CREATE
+POST http://localhost:8080/api/v1/article
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI4NjI0OTEsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI5NDg4OTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.QjMmbCvTmv1yheNjdvNx-LhhthHtxLvRcPuYYJvwomki_UU6-Rhx4DPtuqMRNQ39R7qxxfc3CzsoLk1Te6DTBA
 Content-Type: application/json
 
 {
-  "description": "asdadadsa"
+  "title": "1derere",
+  "description": "regethrthrt",
+  "content": "qwcwefref",
+  "attachId": "667c2f3d-7034-49a7-a5f3-d30238daa268",
+  "regionId": 1,
+  "categoryId": 1,
+  "articleTypeId": 3
 }
+
+### UPDATE BY ID
+POST http://localhost:8080/api/v1/article/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI5NTQ4MTEsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMwNDEyMTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.LZ81epWfbG8dvfhUgw2ku7Hlp1Gh9fNouR4rE-w1RZPrPDqzRCc-C7E2xaTowV0ZXp1zH45lbmW68km9YKiIng
+Content-Type: application/json
+
+{
+  "title": "Salom1"
+}
+
+### DELETE BY ID
+DELETE http://localhost:8080/api/v1/article/1
+
+### CHANGE STATUS
+POST http://localhost:8080/api/v1/article/change-status/1
+
+### GET 5 ARTICLE
+GET http://localhost:8080/api/v1/article/getLast5Article/1
+
+### GET 3 ARTICLE
+GET http://localhost:8080/api/v1/article/getLast3Article/1
+
+### GET 8 ARTICLE WITHOUT ARTICLE ID
+POST http://localhost:8080/api/v1/article/getLast8Article/1
+Content-Type: application/json
+
+{
+  "article_id": ["1", "2", "3"]
+}
+
+### GET BY ID
+GET http://localhost:8080/api/v1/article/getById/51fc3e4b-c54b-409c-9423-0ce7c20c7fb2

@@ -1,12 +1,12 @@
 ### Article Type create
 POST http://localhost:8080/api/v1/article-type/
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODE5MDc2MzgsImlkIjo0LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODE5OTQwMzgsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.fzwOPAPwBOqtT1y-Rd1lHwleqJ78LU25qdP5MwoUq2zEP7bQiLhOudqW2LBIPwO7DhumaA44_Yf0T5VbSHXKnA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI4NjI0OTEsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI5NDg4OTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.QjMmbCvTmv1yheNjdvNx-LhhthHtxLvRcPuYYJvwomki_UU6-Rhx4DPtuqMRNQ39R7qxxfc3CzsoLk1Te6DTBA
 Content-Type: application/json
 
 {
-  "nameUz": "Alihs",
-  "nameRU": "Igr",
-  "nameEng": "Smit"
+  "nameUz": "MUXARRIR TANLOVI",
+  "nameRU": "MUXARRIR TANLOVI",
+  "nameEng": "MUXARRIR TANLOVI"
 }
 
 ### ArticleType update with id
