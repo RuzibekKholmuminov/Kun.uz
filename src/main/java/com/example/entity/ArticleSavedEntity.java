@@ -9,24 +9,20 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "comment")
-public class CommentEntity {
+@Table(name = "article_saved")
+public class ArticleSavedEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-    @Column(name = "content")
-    private String content;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private ProfileEntity profile;
+
     @ManyToOne
     @JoinColumn(name = "article_id")
     private ArticleEntity article;
+
     @Column(name = "created_date")
     private LocalDate createdDate;
-    @Column(name = "update_date")
-    private LocalDate update_date;
-    @Column(name = "visible")
-    private Boolean visible;
-
 }

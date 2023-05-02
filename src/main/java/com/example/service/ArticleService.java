@@ -118,7 +118,7 @@ public class ArticleService {
     public ArticleEntity get(String id) {
         Optional<ArticleEntity> optional = articleRepository.findById(id);
         if (optional.isEmpty()) {
-            throw new ItemNotFoundException("Item not found: " + id);
+            throw new ItemNotFoundException("Article not found: " + id);
         }
         return optional.get();
     }
