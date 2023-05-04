@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.dto.ArticleSavedDto;
 import com.example.dto.JwtDto;
 import com.example.dto.TagDto;
 import com.example.enums.ProfileRole;
@@ -29,7 +28,4 @@ public class TagController {
         JwtUtil.getJwtDTO(authorization, ProfileRole.MODERATOR, ProfileRole.ADMIN);
         return ResponseEntity.ok(tagService.delete(id));
     }
-
-
-
 }
