@@ -15,12 +15,12 @@ public class CommentLikeController {
 
     @PostMapping("/like")
     private ResponseEntity<CommentLikeDto> likeCommentLike(@RequestBody CommentLikeDto commentDto){
-        return ResponseEntity.ok(commentLikeService.likeCommentLike(commentDto));
+        return ResponseEntity.ok(commentLikeService.commentLike(commentDto));
     }
 
     @PostMapping("/dislike")
     private ResponseEntity<CommentLikeDto> dislikeCommentLike(@RequestBody CommentLikeDto commentDto){
-        return ResponseEntity.ok(commentLikeService.dislikeCommentLike(commentDto));
+        return ResponseEntity.ok(commentLikeService.commentDislike(commentDto));
     }
 
     @DeleteMapping("/delete")

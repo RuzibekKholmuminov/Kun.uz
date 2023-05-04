@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class CommentLikeService {
     @Autowired
     private CommentLikeRepository commentLikeRepository;
-    public CommentLikeDto likeCommentLike(CommentLikeDto commentDto) {
+    public CommentLikeDto commentLike(CommentLikeDto commentDto) {
         CommentLikeEntity commentLike = commentLikeRepository.getByProfile_id(commentDto.getProfile_id());
         if (commentLike != null){
             if (commentLike.getCommentLikeStatus() == CommentLikeStatus.DISLIKE) {
@@ -37,7 +37,7 @@ public class CommentLikeService {
         return commentDto;
     }
 
-    public CommentLikeDto dislikeCommentLike(CommentLikeDto commentDto) {
+    public CommentLikeDto commentDislike(CommentLikeDto commentDto) {
         CommentLikeEntity commentLike = commentLikeRepository.getByProfile_id(commentDto.getProfile_id());
         if (commentLike != null){
             if (commentLike.getCommentLikeStatus() == CommentLikeStatus.LIKE) {
