@@ -1,0 +1,26 @@
+### ARTICLE LIKE
+POST http://localhost:8080/api/v1/article-like/like
+Content-Type: application/json
+
+{
+  "article_id": 1,
+  "profile_id": 3
+}
+
+### ARTICLE DISLIKE
+POST http://localhost:8080/api/v1/article-like/dislike
+Content-Type: application/json
+
+{
+  "article_id": 1,
+  "profile_id": 3
+}
+
+### DELETE ARTICLE LIKE
+DELETE http://localhost:8080/api/v1/article-like/delete
+Content-Type: application/json
+
+{
+  "article_id": 1,
+  "profile_id": 3
+}
