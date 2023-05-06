@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.CommentDto;
+
 import com.example.dto.CommentLikeDto;
 import com.example.entity.CommentLikeEntity;
 import com.example.enums.CommentLikeStatus;
@@ -28,7 +28,7 @@ public class CommentLikeService {
             }
         }
         CommentLikeEntity commentLikeEntity = new CommentLikeEntity();
-        commentLikeEntity.setComment_id(commentDto.getProfile_id());
+        commentLikeEntity.setCommentId(commentDto.getComment_id());
         commentLikeEntity.setProfile_id(commentDto.getProfile_id());
         commentLikeEntity.setCommentLikeStatus(CommentLikeStatus.LIKE);
         commentLikeRepository.save(commentLikeEntity);
@@ -53,7 +53,7 @@ public class CommentLikeService {
             }
         }
         CommentLikeEntity commentLikeEntity = new CommentLikeEntity();
-        commentLikeEntity.setComment_id(commentDto.getComment_id());
+        commentLikeEntity.setCommentId(commentDto.getComment_id());
         commentLikeEntity.setProfile_id(commentDto.getProfile_id());
         commentLikeEntity.setCommentLikeStatus(CommentLikeStatus.DISLIKE);
         commentLikeRepository.save(commentLikeEntity);

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class CommentLikeDto {
     private Integer id;
-    private Integer comment_id;
+    private String comment_id;
     private Integer profile_id;
     private CommentLikeStatus status;
 }

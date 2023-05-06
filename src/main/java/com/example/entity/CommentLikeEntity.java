@@ -14,7 +14,7 @@ public class CommentLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "comment_id")
-    private Integer comment_id;
+    private String commentId;
     @ManyToOne
     @JoinColumn(name = "comment_id", insertable = false, updatable = false)
     private CommentEntity comment;

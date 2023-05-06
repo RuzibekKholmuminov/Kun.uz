@@ -15,7 +15,7 @@ public class ArticleLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "article_id")
-    private Integer article_id;
+    private String article_id;
     @ManyToOne
     @JoinColumn(name = "article_id", insertable = false, updatable = false)
     private ArticleEntity article;

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ArticleLikeDto {
     private Integer id;
-    private Integer article_id;
+    private String article_id;
     private Integer profile_id;
     private ArticleLikeStatus status;
 }
