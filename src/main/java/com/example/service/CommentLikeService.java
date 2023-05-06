@@ -23,8 +23,8 @@ public class CommentLikeService {
                 return commentDto;
             }
             if (commentLike.getCommentLikeStatus() == CommentLikeStatus.LIKE){
-                commentDto.setStatus(CommentLikeStatus.LIKE);
-                return commentDto;
+                commentLikeRepository.delete(commentLike);
+                return null;
             }
         }
         CommentLikeEntity commentLikeEntity = new CommentLikeEntity();
@@ -48,9 +48,8 @@ public class CommentLikeService {
                 return commentDto;
             }
             if (commentLike.getCommentLikeStatus() == CommentLikeStatus.DISLIKE){
-                commentDto.setId(commentLike.getId());
-                commentDto.setStatus(CommentLikeStatus.DISLIKE);
-                return commentDto;
+                commentLikeRepository.delete(commentLike);
+                return null;
             }
         }
         CommentLikeEntity commentLikeEntity = new CommentLikeEntity();

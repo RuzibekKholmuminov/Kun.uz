@@ -28,5 +28,7 @@ public class CommentEntity {
     private LocalDate update_date;
     @Column(name = "visible")
     private Boolean visible;
+    @Column(name = "like_count")
+    private Integer likeCount;
 
 }

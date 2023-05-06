@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 public class ArticleEntity {
     public ArticleEntity() {
     }
-
-
     public ArticleEntity(String id, String title, String description, String attachId, LocalDateTime publishedDate) {
         this.id = id;
         this.title = title;

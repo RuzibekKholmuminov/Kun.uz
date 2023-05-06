@@ -19,4 +19,5 @@ public class CommentDto {
     private LocalDate createdDate;
     private LocalDate update_date;
     private Boolean visible = true;
+    private Integer likeCount;
 }

@@ -26,8 +26,8 @@ public class ArticleLikeService {
                 return articleLikeDto;
             }
             if (articleLike.getStatus() == ArticleLikeStatus.LIKE){
-                articleLikeDto.setStatus(ArticleLikeStatus.LIKE);
-                return articleLikeDto;
+                deleteLike(articleLikeDto);
+                return null;
             }
         }
         ArticleLikeEntity articleLikeEntity = new ArticleLikeEntity();
@@ -51,8 +51,8 @@ public class ArticleLikeService {
                 return articleLikeDto;
             }
             if (articleLike.getStatus() == ArticleLikeStatus.DISLIKE){
-                articleLikeDto.setStatus(ArticleLikeStatus.DISLIKE);
-                return articleLikeDto;
+                articleLikeRepository.delete(articleLike);
+                return null;
             }
         }
         ArticleLikeEntity articleLikeEntity = new ArticleLikeEntity();
