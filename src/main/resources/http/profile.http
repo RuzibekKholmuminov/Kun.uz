@@ -1,15 +1,15 @@
 ### Create profile
 POST localhost:8080/api/v1/profile/
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI3NzE4NzksImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI4NTgyNzksImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.rTSQUZb_ql0g8laDRPZcheqySvUMEElmtUG4zbtl8tYkYbijeNrm2bd4FkNaEoUaPd9NhxJaiDb_YCVRiZCbow
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODM1MzIzNzEsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODM2MTg3NzEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.X5SJjCxQeMHAdoY-8LHia22qpvNbGnAYIRQ2yTn6a95kwwnYhzvSAisYE_hEhs6mXpgrn-ifp3hFZWPGQ4aqGA
 Content-Type:  application/json
 
 {
   "name": "dgfchvjb",
   "surname": "gvhbjj",
-  "email": "hcgvjbkn@mail.ru",
-  "phone": "23456",
+  "email": "murodjon0923@gmail.com",
+  "phone": "123",
   "password": "09876",
-  "role": "ADMIN"
+  "role": "USER"
 }
 
 ### Profile List with pagination

@@ -1,21 +1,21 @@
 ### ARTICLE CREATE
-POST http://localhost:8080/api/v1/article
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI4NjI0OTEsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODI5NDg4OTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.QjMmbCvTmv1yheNjdvNx-LhhthHtxLvRcPuYYJvwomki_UU6-Rhx4DPtuqMRNQ39R7qxxfc3CzsoLk1Te6DTBA
+POST http://localhost:8080/api/v1/article/private
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODM1MzIzNzEsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODM2MTg3NzEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.X5SJjCxQeMHAdoY-8LHia22qpvNbGnAYIRQ2yTn6a95kwwnYhzvSAisYE_hEhs6mXpgrn-ifp3hFZWPGQ4aqGA
 Content-Type: application/json
 
 {
   "title": "1derere",
   "description": "regethrthrt",
   "content": "qwcwefref",
-  "attachId": "667c2f3d-7034-49a7-a5f3-d30238daa268",
+  "attachId": "10f3ba26-d714-4bc7-b26e-74cb9a76207c",
   "regionId": 1,
   "categoryId": 1,
   "articleTypeId": 3
 }
 
 ### UPDATE BY ID
-POST http://localhost:8080/api/v1/article/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODI5NTQ4MTEsImlkIjo5LCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODMwNDEyMTEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.LZ81epWfbG8dvfhUgw2ku7Hlp1Gh9fNouR4rE-w1RZPrPDqzRCc-C7E2xaTowV0ZXp1zH45lbmW68km9YKiIng
+POST http://localhost:8080/api/v1/article/private/e84455a5-e5be-4352-aeb6-c5e699535c1d
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODM1MzIzNzEsImlkIjozLCJyb2xlIjoiQURNSU4iLCJleHAiOjE2ODM2MTg3NzEsImlzcyI6Ikt1bnV6IHRlc3QgcG9ydGFsaSJ9.X5SJjCxQeMHAdoY-8LHia22qpvNbGnAYIRQ2yTn6a95kwwnYhzvSAisYE_hEhs6mXpgrn-ifp3hFZWPGQ4aqGA
 Content-Type: application/json
 
 {

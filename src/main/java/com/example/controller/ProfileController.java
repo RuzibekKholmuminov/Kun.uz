@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import com.example.dto.JwtDto;
 import com.example.dto.ProfileDto;
 import com.example.enums.ProfileRole;
-import com.example.exps.MethodNotAllowedException;
 import com.example.service.ProfileService;
 import com.example.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,10 @@ public class ProfileController {
 
     @PostMapping({"", "/"})
     public ResponseEntity<ProfileDto> create(@RequestBody ProfileDto dto,
-                                             @RequestHeader("Authorization") String authorization) {
-        JwtDto jwtDTO = JwtUtil.getJwtDTO(authorization, ProfileRole.ADMIN);
-        return ResponseEntity.ok(profileService.create(dto, jwtDTO.getId()));
+                                             HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
+        Integer prtId = (Integer) request.getAttribute("id");
+        return ResponseEntity.ok(profileService.create(dto, prtId));
     }
 
     @GetMapping("/list-paging")
@@ -41,9 +41,11 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.deleteById(id));
     }
 
-    @PutMapping("/updateAdmin/{id}")
+    @PutMapping("/update/private/{id}")
     public ResponseEntity<Boolean> updateAdmin(@PathVariable ("id") Integer id,
-                                               @RequestBody ProfileDto profileDto) {
+                                               @RequestBody ProfileDto profileDto,
+                                               HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         return ResponseEntity.ok(profileService.updateAdmin(id, profileDto));
     }
 

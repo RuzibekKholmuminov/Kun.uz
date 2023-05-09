@@ -1,7 +1,10 @@
 package com.example.controller;
 
 import com.example.dto.AttachDto;
+import com.example.enums.ProfileRole;
 import com.example.service.AttachService;
+import com.example.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,18 +19,24 @@ public class AttachController {
     @Autowired
     private AttachService attachService;
 
-    @PostMapping("/upload/v1")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/private/v1")
+    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
+                                         HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         String fileName = attachService.saveToSystem(file);
         return ResponseEntity.ok().body(fileName);
     }
-    @PostMapping("/upload/v2")
-    public ResponseEntity<String> upload2(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/private/v2")
+    public ResponseEntity<String> upload2(@RequestParam("file") MultipartFile file,
+                                          HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         String fileName = attachService.saveToSystem2(file);
         return ResponseEntity.ok().body(fileName);
     }
-    @PostMapping("/upload/v3")
-    public ResponseEntity<AttachDto> upload3(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/private/v3")
+    public ResponseEntity<AttachDto> upload3(@RequestParam("file") MultipartFile file,
+                                             HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         AttachDto dto = attachService.saveToSystem3(file);
         return ResponseEntity.ok().body(dto);
     }
@@ -49,9 +58,9 @@ public class AttachController {
         return attachService.open_general2(id);
     }
 
-    @GetMapping("/download/{fineName}")
-    public ResponseEntity<Resource> download(@PathVariable("fineName") String fileName) {
-        Resource file = attachService.download(fileName);
+    @GetMapping("/download/{photoId}")
+    public ResponseEntity<Resource> download(@PathVariable("photoId") String photo_id) {
+        Resource file = attachService.download(photo_id);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }

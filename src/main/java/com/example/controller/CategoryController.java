@@ -1,11 +1,10 @@
 package com.example.controller;
 
 import com.example.dto.CategoryDto;
-import com.example.dto.JwtDto;
 import com.example.enums.ProfileRole;
-import com.example.exps.MethodNotAllowedException;
 import com.example.service.CategoryService;
 import com.example.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,25 +15,25 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping({"", "/"})
+    @PostMapping({"/private"})
     public ResponseEntity<Integer> create(@RequestBody CategoryDto dto,
-                                          @RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDto jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
-        return ResponseEntity.ok(categoryService.create(dto, jwtDTO.getId()));
+                                          HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
+        Integer prtId = (Integer) request.getAttribute("id");
+        return ResponseEntity.ok(categoryService.create(dto, prtId));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/private/{id}")
     public ResponseEntity<Boolean> update(@PathVariable("id") Integer id,
-                                          @RequestBody CategoryDto categoryDto) {
+                                          @RequestBody CategoryDto categoryDto,
+                                          HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         return ResponseEntity.ok(categoryService.update(id, categoryDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable ("id") Integer id) {
+    @DeleteMapping("/private/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable ("id") Integer id,
+                                              HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
         return ResponseEntity.ok(categoryService.deleteById(id));
     }
 

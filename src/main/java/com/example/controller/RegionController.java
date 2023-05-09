@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import com.example.dto.JwtDto;
 import com.example.dto.RegionDto;
 import com.example.enums.ProfileRole;
-import com.example.exps.MethodNotAllowedException;
 import com.example.service.RegionService;
 import com.example.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +15,12 @@ public class RegionController {
     @Autowired
     private RegionService regionService;
 
-    @PostMapping({"", "/"})
+    @PostMapping({"/private/"})
     public ResponseEntity<Integer> create(@RequestBody RegionDto dto,
-                                          @RequestHeader("Authorization") String authorization) {
-        String[] str = authorization.split(" ");
-        String jwt = str[1];
-        JwtDto jwtDTO = JwtUtil.decode(jwt);
-        if (!jwtDTO.getRole().equals(ProfileRole.ADMIN)) {
-            throw new MethodNotAllowedException("Method not allowed");
-        }
-        return ResponseEntity.ok(regionService.create(dto, jwtDTO.getId()));
+                                          HttpServletRequest request) {
+        JwtUtil.checkForRequiredRole(request, ProfileRole.ADMIN);
+        Integer prtId = (Integer) request.getAttribute("id");
+        return ResponseEntity.ok(regionService.create(dto, prtId));
     }
     @PutMapping("/{id}")
     public ResponseEntity<Boolean> update(@PathVariable("id") Integer id,

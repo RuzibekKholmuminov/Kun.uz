@@ -33,7 +33,6 @@ public class AttachService {
     private AttachRepository attachRepository;
 
 
-
     public String saveToSystem(MultipartFile file) {
         try {
             File folder = new File("attaches");
@@ -124,6 +123,7 @@ public class AttachService {
         }
         return null;
     }
+
     public AttachDto getAttachLink(String attachId) {
         AttachDto dto = new AttachDto();
         dto.setId(attachId);
@@ -138,7 +138,7 @@ public class AttachService {
         BufferedImage originalImage;
         try {
             AttachEntity attachEntity = get(id);
-            originalImage = ImageIO.read(new File("attaches/" + attachEntity.getPath() +"/" + id + ".jpg" ));
+            originalImage = ImageIO.read(new File("attaches/" + attachEntity.getPath() + "/" + id + ".jpg"));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(originalImage, "png", baos);
             baos.flush();
@@ -159,9 +159,10 @@ public class AttachService {
             return data;
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException();
         }
-        return new byte[0];
     }
+
     public byte[] open_general(String attachName) {
         byte[] data;
         try {
@@ -208,23 +209,26 @@ public class AttachService {
     }
 
 
-    public Resource download(String fileName) {
+    public Resource download(String photo_id) {
+
         try {
-            Path file = Paths.get("attaches/" + fileName);
-            Resource resource = new UrlResource(file.toUri());
+            AttachEntity attachEntity = get(photo_id);
+            // attaches/2023/4/25/20f0f915-93ec-4099-97e3-c1cb7a95151f.jpg
+            Path file = Paths.get("attaches/" + attachEntity.getPath() + "/" + photo_id + "." + attachEntity.getExtension());
+            Resource resource =  new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            } else {
-                throw new RuntimeException("Could not read the file!");
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
+            throw new RuntimeException(e);
         }
+        return null;
     }
 
     public Boolean delete(String id) {
+
         AttachEntity attachEntity = attachRepository.getById(id);
-        if (attachEntity == null){
+        if (attachEntity == null) {
             throw new ItemNotFoundException("Attach not found");
         }
         attachRepository.deleteById(id);
